@@ -51,7 +51,7 @@ fn init() bool {
 
     c.glfwWindowHint(c.GLFW_SAMPLES, 4);                // 4x antialiasing
 
-    window = c.glfwCreateWindow(width, height, c"Lesson 1", null, null) orelse {
+    window = c.glfwCreateWindow(width, height, c"Tutorial", null, null) orelse {
         panic("unable to create window\n");
     };
 

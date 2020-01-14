@@ -30,10 +30,8 @@ fn perspectiveGL(fovY: f64, aspect: f64, zNear: f64, zFar: f64) void {
 fn init_gl() void {
     c.glMatrixMode(c.GL_PROJECTION);                    // Select The Projection Matrix
     c.glLoadIdentity();
-
     var aspect_ratio: f32 = f32(height) / f32(width);
     perspectiveGL(45.0, (1.0 / aspect_ratio), 0.1, 100.0);
-
     c.glMatrixMode(c.GL_MODELVIEW);
     c.glShadeModel(c.GL_SMOOTH);                        // Enables Smooth Shading
     c.glClearColor(0.0, 0.0, 0.0, 0.0);                 // Black Background
@@ -60,9 +58,37 @@ fn init() bool {
     _ = c.glfwSetKeyCallback(window, keyCallback);
     c.glfwMakeContextCurrent(window);
     c.glfwSwapInterval(1);
-    
+
     init_gl();
     return true;
+}
+
+fn draw() void {                                // Here's Where We Do All The Drawing
+    c.glClear(c.GL_COLOR_BUFFER_BIT | c.GL_DEPTH_BUFFER_BIT);         // Clear The Screen And The Depth Buffer
+    c.glLoadIdentity();                         // Reset The Current Modelview Matrix
+    c.glTranslatef(-1.5, 0.0, -6.0);            // Move Left 1.5 Units And Into The Screen 6.0
+
+    c.glBegin(c.GL_TRIANGLES);                  // Drawing Using Triangles
+    c.glColor3f(1.0, 0.0, 0.0);                 // Set The Color To Red
+    c.glVertex3f(0.0, 1.0, 0.0);                // Move Up One Unit From Center (Top Point)
+    c.glColor3f(0.0, 1.0, 0.0);                 // Set The Color To Green
+    c.glVertex3f(-1.0, -1.0, 0.0);              // Left And Down One Unit (Bottom Left)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Set The Color To Blue
+    c.glVertex3f(1.0, -1.0, 0.0);              // Right And Down One Unit (Bottom Right)
+    c.glEnd();                                  // Finished Drawing The Triangle
+
+    c.glTranslatef(3.0, 0.0, 0.0);              // Move Right 3 Units
+
+    c.glColor3f(0.5, 0.5, 1.0);                 // Set The Color To Blue One Time Only
+
+    c.glBegin(c.GL_QUADS);                      // Draw A Quad
+    c.glVertex3f(-1.0, 1.0, 0.0);               // Top Left
+    c.glVertex3f( 1.0, 1.0, 0.0);               // Top Right
+    c.glVertex3f( 1.0, -1.0, 0.0);              // Bottom Right
+    c.glVertex3f(-1.0, -1.0, 0.0);              // Bottom Left
+    c.glEnd();                                  // Done Drawing The Quad
+
+    c.glLoadIdentity();                         // Reset The Current Modelview Matrix
 }
 
 pub fn main() u8 {
@@ -71,7 +97,9 @@ pub fn main() u8 {
     }
 
     while (c.glfwWindowShouldClose(window) == c.GL_FALSE) {
-        // Draw nothing, see you in tutorial 2 !
+        // Actually draw stuff.
+        draw();
+
         // Swap buffers
         c.glfwSwapBuffers(window);
 
