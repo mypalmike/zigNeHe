@@ -102,8 +102,6 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glTranslatef(1.5, 0.0, -6.0);             // Move Right 3 Units
     c.glRotatef(rquad, 1.0, 0.0, 0.0);          // Rotate The Quad On The X axis (NEW )
 
-    c.glColor3f(0.5, 0.5, 1.0);                 // Set The Color To Blue One Time Only
-
     c.glBegin(c.GL_QUADS);                      // Draw A Quad
     c.glColor3f(0.0, 1.0, 0.0);          // Set The Color To Green
     c.glVertex3f( 1.0, 1.0, -1.0);          // Top Right Of The Quad (Top)
