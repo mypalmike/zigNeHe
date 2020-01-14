@@ -2,8 +2,8 @@ const std = @import("std");
 const warn = std.debug.warn;
 const panic = std.debug.panic;
 const c = @import("c.zig");
-const BmpImage = @import("bmp.zig").BmpImage;
-const nehe_bmp = @embedFile("../data/NeHe.bmp");
+const PngImage = @import("png.zig").PngImage;
+const nehe_png = @embedFile("../data/NeHe.png");
 
 const width: i32 = 1024;
 const height: i32 = 768;
@@ -36,11 +36,7 @@ fn perspectiveGL(fovY: f64, aspect: f64, zNear: f64, zFar: f64) void {
 }
 
 fn load_texture() !void {
-    var img = try BmpImage.create(nehe_bmp);
-    // const col_count = s.img.width / w;
-    // const row_count = s.img.height / h;
-    // s.count = col_count * row_count;
-
+    var img = try PngImage.create(nehe_png);
     c.glGenTextures(1, &texture);
     errdefer c.glDeleteTextures(1, &texture);
 
@@ -65,7 +61,9 @@ fn load_texture() !void {
 }
 
 fn init_gl() void {
-    load_texture() catch {};
+    load_texture() catch {
+        warn("Failed to load texture.\n");
+    };
 
     c.glMatrixMode(c.GL_PROJECTION);                    // Select The Projection Matrix
     c.glLoadIdentity();
