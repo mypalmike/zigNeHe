@@ -75,27 +75,27 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glColor3f(1.0, 0.0, 0.0);                 // Red
     c.glVertex3f(0.0, 1.0, 0.0);                // Top Of Triangle (Front)
     c.glColor3f(0.0, 1.0, 0.0);                 // Green
-    c.glVertex3f(-1.0, -1.0, 1.0);          // Left Of Triangle (Front)
-    c.glColor3f(0.0, 0.0, 1.0);          // Blue
-    c.glVertex3f(1.0, -1.0, 1.0);          // Right Of Triangle (Front)
-    c.glColor3f(1.0, 0.0, 0.0);          // Red
-    c.glVertex3f(0.0, 1.0, 0.0);          // Top Of Triangle (Right)
-    c.glColor3f(0.0, 0.0, 1.0);          // Blue
-    c.glVertex3f(1.0, -1.0, 1.0);          // Left Of Triangle (Right)
-    c.glColor3f(0.0, 1.0, 0.0);          // Green
-    c.glVertex3f(1.0, -1.0, -1.0);         // Right Of Triangle (Right)
-    c.glColor3f(1.0, 0.0, 0.0);          // Red
-    c.glVertex3f(0.0, 1.0, 0.0);          // Top Of Triangle (Back)
-    c.glColor3f(0.0, 1.0, 0.0);          // Green
-    c.glVertex3f(1.0, -1.0, -1.0);         // Left Of Triangle (Back)
-    c.glColor3f(0.0, 0.0, 1.0);          // Blue
-    c.glVertex3f(-1.0, -1.0, -1.0);         // Right Of Triangle (Back)
-    c.glColor3f(1.0, 0.0, 0.0);          // Red
-    c.glVertex3f(0.0, 1.0, 0.0);          // Top Of Triangle (Left)
-    c.glColor3f(0.0, 0.0, 1.0);          // Blue
-    c.glVertex3f(-1.0, -1.0, -1.0);          // Left Of Triangle (Left)
-    c.glColor3f(0.0, 1.0, 0.0);          // Green
-    c.glVertex3f(-1.0, -1.0, 1.0);          // Right Of Triangle (Left)   
+    c.glVertex3f(-1.0, -1.0, 1.0);              // Left Of Triangle (Front)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Blue
+    c.glVertex3f(1.0, -1.0, 1.0);               // Right Of Triangle (Front)
+    c.glColor3f(1.0, 0.0, 0.0);                 // Red
+    c.glVertex3f(0.0, 1.0, 0.0);                // Top Of Triangle (Right)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Blue
+    c.glVertex3f(1.0, -1.0, 1.0);               // Left Of Triangle (Right)
+    c.glColor3f(0.0, 1.0, 0.0);                 // Green
+    c.glVertex3f(1.0, -1.0, -1.0);              // Right Of Triangle (Right)
+    c.glColor3f(1.0, 0.0, 0.0);                 // Red
+    c.glVertex3f(0.0, 1.0, 0.0);                // Top Of Triangle (Back)
+    c.glColor3f(0.0, 1.0, 0.0);                 // Green
+    c.glVertex3f(1.0, -1.0, -1.0);              // Left Of Triangle (Back)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Blue
+    c.glVertex3f(-1.0, -1.0, -1.0);             // Right Of Triangle (Back)
+    c.glColor3f(1.0, 0.0, 0.0);                 // Red
+    c.glVertex3f(0.0, 1.0, 0.0);                // Top Of Triangle (Left)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Blue
+    c.glVertex3f(-1.0, -1.0, -1.0);             // Left Of Triangle (Left)
+    c.glColor3f(0.0, 1.0, 0.0);                 // Green
+    c.glVertex3f(-1.0, -1.0, 1.0);              // Right Of Triangle (Left)   
     c.glEnd();                                  // Finished Drawing The Triangle
 
     c.glLoadIdentity();                         // Reset The Current Modelview Matrix
@@ -103,36 +103,36 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glRotatef(rquad, 1.0, 0.0, 0.0);          // Rotate The Quad On The X axis (NEW )
 
     c.glBegin(c.GL_QUADS);                      // Draw A Quad
-    c.glColor3f(0.0, 1.0, 0.0);          // Set The Color To Green
-    c.glVertex3f( 1.0, 1.0, -1.0);          // Top Right Of The Quad (Top)
-    c.glVertex3f(-1.0, 1.0, -1.0);          // Top Left Of The Quad (Top)
-    c.glVertex3f(-1.0, 1.0, 1.0);          // Bottom Left Of The Quad (Top)
-    c.glVertex3f( 1.0, 1.0, 1.0);          // Bottom Right Of The Quad (Top)
-    c.glColor3f(1.0, 0.5, 0.0);          // Set The Color To Orange
-    c.glVertex3f( 1.0, -1.0, 1.0);          // Top Right Of The Quad (Bottom)
-    c.glVertex3f(-1.0, -1.0, 1.0);          // Top Left Of The Quad (Bottom)
-    c.glVertex3f(-1.0, -1.0, -1.0);          // Bottom Left Of The Quad (Bottom)
-    c.glVertex3f( 1.0, -1.0, -1.0);          // Bottom Right Of The Quad (Bottom)
-    c.glColor3f(1.0, 0.0, 0.0);          // Set The Color To Red
-    c.glVertex3f( 1.0, 1.0, 1.0);          // Top Right Of The Quad (Front)
-    c.glVertex3f(-1.0, 1.0, 1.0);          // Top Left Of The Quad (Front)
-    c.glVertex3f(-1.0, -1.0, 1.0);          // Bottom Left Of The Quad (Front)
-    c.glVertex3f( 1.0, -1.0, 1.0);          // Bottom Right Of The Quad (Front)
-    c.glColor3f(1.0, 1.0, 0.0);          // Set The Color To Yellow
-    c.glVertex3f( 1.0, -1.0, -1.0);          // Bottom Left Of The Quad (Back)
-    c.glVertex3f(-1.0, -1.0, -1.0);          // Bottom Right Of The Quad (Back)
-    c.glVertex3f(-1.0, 1.0, -1.0);          // Top Right Of The Quad (Back)
-    c.glVertex3f( 1.0, 1.0, -1.0);          // Top Left Of The Quad (Back)
-    c.glColor3f(0.0, 0.0, 1.0);          // Set The Color To Blue
-    c.glVertex3f(-1.0, 1.0, 1.0);          // Top Right Of The Quad (Left)
-    c.glVertex3f(-1.0, 1.0, -1.0);          // Top Left Of The Quad (Left)
-    c.glVertex3f(-1.0, -1.0, -1.0);          // Bottom Left Of The Quad (Left)
-    c.glVertex3f(-1.0, -1.0, 1.0);          // Bottom Right Of The Quad (Left)
-    c.glColor3f(1.0, 0.0, 1.0);          // Set The Color To Violet
-    c.glVertex3f( 1.0, 1.0, -1.0);          // Top Right Of The Quad (Right)
-    c.glVertex3f( 1.0, 1.0, 1.0);          // Top Left Of The Quad (Right)
-    c.glVertex3f( 1.0, -1.0, 1.0);          // Bottom Left Of The Quad (Right)
-    c.glVertex3f( 1.0, -1.0, -1.0);          // Bottom Right Of The Quad (Right)
+    c.glColor3f(0.0, 1.0, 0.0);                 // Set The Color To Green
+    c.glVertex3f( 1.0, 1.0, -1.0);              // Top Right Of The Quad (Top)
+    c.glVertex3f(-1.0, 1.0, -1.0);              // Top Left Of The Quad (Top)
+    c.glVertex3f(-1.0, 1.0, 1.0);               // Bottom Left Of The Quad (Top)
+    c.glVertex3f( 1.0, 1.0, 1.0);               // Bottom Right Of The Quad (Top)
+    c.glColor3f(1.0, 0.5, 0.0);                 // Set The Color To Orange
+    c.glVertex3f( 1.0, -1.0, 1.0);              // Top Right Of The Quad (Bottom)
+    c.glVertex3f(-1.0, -1.0, 1.0);              // Top Left Of The Quad (Bottom)
+    c.glVertex3f(-1.0, -1.0, -1.0);             // Bottom Left Of The Quad (Bottom)
+    c.glVertex3f( 1.0, -1.0, -1.0);             // Bottom Right Of The Quad (Bottom)
+    c.glColor3f(1.0, 0.0, 0.0);                 // Set The Color To Red
+    c.glVertex3f( 1.0, 1.0, 1.0);               // Top Right Of The Quad (Front)
+    c.glVertex3f(-1.0, 1.0, 1.0);               // Top Left Of The Quad (Front)
+    c.glVertex3f(-1.0, -1.0, 1.0);              // Bottom Left Of The Quad (Front)
+    c.glVertex3f( 1.0, -1.0, 1.0);              // Bottom Right Of The Quad (Front)
+    c.glColor3f(1.0, 1.0, 0.0);                 // Set The Color To Yellow
+    c.glVertex3f( 1.0, -1.0, -1.0);             // Bottom Left Of The Quad (Back)
+    c.glVertex3f(-1.0, -1.0, -1.0);             // Bottom Right Of The Quad (Back)
+    c.glVertex3f(-1.0, 1.0, -1.0);              // Top Right Of The Quad (Back)
+    c.glVertex3f( 1.0, 1.0, -1.0);              // Top Left Of The Quad (Back)
+    c.glColor3f(0.0, 0.0, 1.0);                 // Set The Color To Blue
+    c.glVertex3f(-1.0, 1.0, 1.0);               // Top Right Of The Quad (Left)
+    c.glVertex3f(-1.0, 1.0, -1.0);              // Top Left Of The Quad (Left)
+    c.glVertex3f(-1.0, -1.0, -1.0);             // Bottom Left Of The Quad (Left)
+    c.glVertex3f(-1.0, -1.0, 1.0);              // Bottom Right Of The Quad (Left)
+    c.glColor3f(1.0, 0.0, 1.0);                 // Set The Color To Violet
+    c.glVertex3f( 1.0, 1.0, -1.0);              // Top Right Of The Quad (Right)
+    c.glVertex3f( 1.0, 1.0, 1.0);               // Top Left Of The Quad (Right)
+    c.glVertex3f( 1.0, -1.0, 1.0);              // Bottom Left Of The Quad (Right)
+    c.glVertex3f( 1.0, -1.0, -1.0);             // Bottom Right Of The Quad (Right)
     c.glEnd();                                  // Done Drawing The Quad
 
     c.glLoadIdentity();                         // Reset The Current Modelview Matrix
