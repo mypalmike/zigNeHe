@@ -1,6 +1,6 @@
 # zigNeHe
 
-The ancient NeHe OpenGL tutorials.
+The ancient NeHe OpenGL tutorials, ported to the Zig language.
 
 Based largely on the glfw 2 versions by Joseph Redmon (pjreddie@) https://github.com/pjreddie/NeHe-Tutorials-Using-GLFW with updates for glfw 3.
 
