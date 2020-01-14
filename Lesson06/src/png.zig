@@ -1,10 +1,6 @@
 const c = @import("c.zig");
 
-const std = @import("std");
-const warn = std.debug.warn;
-
-
-// Adapted fom https://github.com/andrewrk/tetris
+// From https://github.com/andrewrk/tetris
 pub const PngImage = struct {
     width: u32,
     height: u32,
@@ -21,11 +17,9 @@ pub const PngImage = struct {
         var width: c_int = undefined;
         var height: c_int = undefined;
 
-        warn("Calling stbi_info_from_memory\n");
         if (c.stbi_info_from_memory(compressed_bytes.ptr, @intCast(c_int, compressed_bytes.len), &width, &height, null) == 0) {
             return error.NotPngFile;
         }
-        warn("Success stbi_info_from_memory\n");
 
         if (width <= 0 or height <= 0) return error.NoPixels;
         pi.width = @intCast(u32, width);
