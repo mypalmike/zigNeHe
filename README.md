@@ -6,7 +6,17 @@ Based largely on the glfw 2 versions by Joseph Redmon (pjreddie@) https://github
 
 The build.zig files are rather specific to building on my MacOS laptop. If you do not have my particular laptop, you may need to modify things to get it building for you.
 
+## Requirements
+
 You will need to install and build against glfw (see https://www.glfw.org/). On MacOS, you can brew install it.
+
+
+## Screen Shot
+
+From Lesson 6:
+
+![Alt text](zigNehe.png?raw=true "Screen Shot")
+
 
 ## TODO
 
