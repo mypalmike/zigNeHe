@@ -9,8 +9,13 @@ The build.zig files are rather specific to building on my MacOS laptop. If you d
 
 ## Requirements
 
-Currently builds 
-You will need to install and build against glfw (see https://www.glfw.org/). On MacOS, you can brew install it.
+Tested with Zig version 0.5.0.
+
+You will need to install glfw (see https://www.glfw.org/). On MacOS:
+
+```
+$ brew install glfw
+```
 
 
 ## Building and running
