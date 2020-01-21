@@ -1,4 +1,5 @@
 const Builder = @import("std").build.Builder;
+const builtin = @import("builtin");
 
 pub fn build(b: *Builder) void {
     const mode = b.standardReleaseOptions();
@@ -8,11 +9,23 @@ pub fn build(b: *Builder) void {
 
     exe.setBuildMode(mode);
 
-    exe.addFrameworkDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks");
+    switch (builtin.os) {
+        .macosx => {
+            exe.addFrameworkDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks");
+            exe.linkFramework("OpenGL");
+        },
+        .freebsd => {
+            exe.addIncludeDir("/usr/local/include/GL");
+            exe.linkSystemLibrary("gl");
+            exe.linkSystemLibrary("glu");
+        },
+        else => {
+            @panic("don't know how to build on your system");
+        },
+    }
     exe.addIncludeDir("stb_image-2.23");
     exe.addIncludeDir("/usr/local/include");
     exe.linkSystemLibrary("glfw");
-    exe.linkFramework("OpenGL");
 
     exe.install();
 
