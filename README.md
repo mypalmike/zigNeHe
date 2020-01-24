@@ -4,7 +4,7 @@ The ancient NeHe OpenGL tutorials, ported to the Zig language.
 
 Based largely on the C-based glfw 2 NeHe tutorials by Joseph Redmon (pjreddie@) https://github.com/pjreddie/NeHe-Tutorials-Using-GLFW with updates for glfw 3. Other useful base material from https://github.com/andrewrk/tetris.
 
-The build.zig files are rather specific to building on my MacOS laptop. If you do not have my particular laptop, you may need to modify things to get it building for you.
+The build.zig files work on some versions of MacOS and FreeBSD. With a little effort they should build on other OSes - contributions welcome.
 
 
 ## Requirements
