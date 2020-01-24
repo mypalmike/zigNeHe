@@ -122,22 +122,25 @@ fn init_gl() void {
         warn("Failed to load textures.\n");
     };
 
+    c.glViewport(0, 0, width, height);
     c.glMatrixMode(c.GL_PROJECTION);                        // Select The Projection Matrix
     c.glLoadIdentity();
     var aspect_ratio: f32 = f32(height) / f32(width);
     perspectiveGL(45.0, (1.0 / aspect_ratio), 0.1, 100.0);
     c.glMatrixMode(c.GL_MODELVIEW);
+    c.glLoadIdentity();
+
     c.glEnable(c.GL_TEXTURE_2D);
     c.glShadeModel(c.GL_SMOOTH);                            // Enables Smooth Shading
-    c.glClearColor(0.0, 0.0, 0.0, 0.0);                     // Black Background
+    c.glClearColor(0.0, 0.0, 0.0, 0.5);                     // Black Background
     c.glClearDepth(1.0);                                    // Depth Buffer Setup
     c.glEnable(c.GL_DEPTH_TEST);                            // Enables Depth Testing
     c.glDepthFunc(c.GL_LEQUAL);                             // The Type Of Depth Test To Do
     c.glHint(c.GL_PERSPECTIVE_CORRECTION_HINT, c.GL_NICEST);  // Really Nice Perspective Calculations
 
-    c.glLightfv(c.GL_LIGHT1, c.GL_AMBIENT, &lightAmbient);   // Setup The Ambient Light
-    c.glLightfv(c.GL_LIGHT1, c.GL_DIFFUSE, &lightDiffuse);   // Setup The Diffuse Light
-    c.glLightfv(c.GL_LIGHT1, c.GL_POSITION, &lightPosition); // Position The Light
+    c.glLightfv(c.GL_LIGHT1, c.GL_AMBIENT, &lightAmbient[0]);   // Setup The Ambient Light
+    c.glLightfv(c.GL_LIGHT1, c.GL_DIFFUSE, &lightDiffuse[0]);   // Setup The Diffuse Light
+    c.glLightfv(c.GL_LIGHT1, c.GL_POSITION, &lightPosition[0]); // Position The Light
     c.glEnable(c.GL_LIGHT1);                                // Enable Light One    
 }
 
@@ -174,32 +177,38 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glBindTexture(c.GL_TEXTURE_2D, texture[filter]);  // Select Our Texture
 
     c.glBegin(c.GL_QUADS);
-    // Front Face
+    // Front 
+    c.glNormal3f(0.0, 0.0, 1.0);
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f(-1.0, -1.0,  1.0);  // Bottom Left Of The Texture and Quad
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f( 1.0, -1.0,  1.0);  // Bottom Right Of The Texture and Quad
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f( 1.0,  1.0,  1.0);  // Top Right Of The Texture and Quad
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f(-1.0,  1.0,  1.0);  // Top Left Of The Texture and Quad
     // Back Face
+    c.glNormal3f(0.0, 0.0, -1.0);
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f(-1.0, -1.0, -1.0);  // Bottom Right Of The Texture and Quad
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f(-1.0,  1.0, -1.0);  // Top Right Of The Texture and Quad
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f( 1.0,  1.0, -1.0);  // Top Left Of The Texture and Quad
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f( 1.0, -1.0, -1.0);  // Bottom Left Of The Texture and Quad
     // Top Face
+    c.glNormal3f(0.0, 1.0, 0.0);
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f(-1.0,  1.0, -1.0);  // Top Left Of The Texture and Quad
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f(-1.0,  1.0,  1.0);  // Bottom Left Of The Texture and Quad
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f( 1.0,  1.0,  1.0);  // Bottom Right Of The Texture and Quad
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f( 1.0,  1.0, -1.0);  // Top Right Of The Texture and Quad
     // Bottom Face
+    c.glNormal3f(0.0, -1.0, 0.0);
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f(-1.0, -1.0, -1.0);  // Top Right Of The Texture and Quad
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f( 1.0, -1.0, -1.0);  // Top Left Of The Texture and Quad
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f( 1.0, -1.0,  1.0);  // Bottom Left Of The Texture and Quad
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f(-1.0, -1.0,  1.0);  // Bottom Right Of The Texture and Quad
     // Right face
+    c.glNormal3f(1.0, 0.0, 0.0);
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f( 1.0, -1.0, -1.0);  // Bottom Right Of The Texture and Quad
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f( 1.0,  1.0, -1.0);  // Top Right Of The Texture and Quad
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f( 1.0,  1.0,  1.0);  // Top Left Of The Texture and Quad
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f( 1.0, -1.0,  1.0);  // Bottom Left Of The Texture and Quad
     // Left Face
+    c.glNormal3f(-1.0, 0.0, 0.0);
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f(-1.0, -1.0, -1.0);  // Bottom Left Of The Texture and Quad
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f(-1.0, -1.0,  1.0);  // Bottom Right Of The Texture and Quad
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f(-1.0,  1.0,  1.0);  // Top Right Of The Texture and Quad
