@@ -3,7 +3,7 @@ const warn = std.debug.warn;
 const panic = std.debug.panic;
 const c = @import("c.zig");
 const PngImage = @import("png.zig").PngImage;
-const crate_png = @embedFile("../data/Crate.png");
+const crate_png = @embedFile("../data/Glass.png");
 
 const width: i32 = 1024;
 const height: i32 = 768;
@@ -11,6 +11,7 @@ const height: i32 = 768;
 var window: *c.GLFWwindow = undefined;
 
 var light: bool = false;              // Lighting ON/OFF
+var blend: bool = false;              // Blending ON/OFF
 
 var xrot: c.GLfloat = 0.0;            // X Rotation
 var yrot: c.GLfloat = 0.0;            // Y Rotation
@@ -44,6 +45,16 @@ extern fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: 
             'F' => {
                 filter += 1;
                 filter = filter % 3;
+            },
+            'B' => {
+                blend = !blend;                     // Toggle blend TRUE / FALSE
+                if (blend) {
+                    c.glEnable(c.GL_BLEND);         // Turn Blending On
+                    c.glDisable(c.GL_DEPTH_TEST);   // Turn Depth Testing Off
+                } else {
+                    c.glDisable(c.GL_BLEND);        // Turn Blending Off
+                    c.glEnable(c.GL_DEPTH_TEST);    // Turn Depth Testing On
+                }
             },
             else => {},
         }
@@ -142,6 +153,9 @@ fn init_gl() void {
     c.glLightfv(c.GL_LIGHT1, c.GL_DIFFUSE, &lightDiffuse[0]);   // Setup The Diffuse Light
     c.glLightfv(c.GL_LIGHT1, c.GL_POSITION, &lightPosition[0]); // Position The Light
     c.glEnable(c.GL_LIGHT1);                                // Enable Light One
+
+    c.glColor4f(1.0, 1.0, 1.0, 0.5);                        // Full Brightness, 50% Alpha
+    c.glBlendFunc(c.GL_SRC_ALPHA, c.GL_ONE);                // Blending Function For Translucency Based On Source Alpha Value   
 }
 
 fn init() bool {
