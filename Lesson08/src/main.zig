@@ -26,11 +26,11 @@ const lightAmbient = [_]c.GLfloat {0.5, 0.5, 0.5, 1.0};
 const lightDiffuse = [_]c.GLfloat {1.0, 1.0, 1.0, 1.0};
 const lightPosition = [_]c.GLfloat {0.0, 0.0, 2.0, 1.0};
 
-extern fn errorCallback(err: c_int, description: [*c]const u8) void {
-    panic("Error: {}\n", description);
+fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
+    panic("Error: {}\n", .{description});
 }
 
-extern fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) void {
+fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
     if (action == c.GLFW_PRESS) {
         switch (key) {
             c.GLFW_KEY_ESCAPE => c.glfwSetWindowShouldClose(win, c.GL_TRUE),
@@ -40,7 +40,7 @@ extern fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: 
                     c.glEnable(c.GL_LIGHTING);
                 } else {
                     c.glDisable(c.GL_LIGHTING);
-                }            
+                }
             },
             'F' => {
                 filter += 1;
@@ -122,7 +122,7 @@ fn load_textures() !void {
         c.GL_RGBA,
         @intCast(c_int, img.width),
         @intCast(c_int, img.height),
-        c.GL_RGBA, 
+        c.GL_RGBA,
         c.GL_UNSIGNED_BYTE,
         @ptrCast(*c_void, &img.raw[0]),
     );
@@ -130,13 +130,13 @@ fn load_textures() !void {
 
 fn init_gl() void {
     load_textures() catch {
-        warn("Failed to load textures.\n");
+        warn("Failed to load textures.\n", .{});
     };
 
     c.glViewport(0, 0, width, height);
     c.glMatrixMode(c.GL_PROJECTION);                        // Select The Projection Matrix
     c.glLoadIdentity();
-    var aspect_ratio: f32 = f32(height) / f32(width);
+    var aspect_ratio: f32 = @intToFloat(f32, height) / @intToFloat(f32, width);
     perspectiveGL(45.0, (1.0 / aspect_ratio), 0.1, 100.0);
     c.glMatrixMode(c.GL_MODELVIEW);
     c.glLoadIdentity();
@@ -155,21 +155,21 @@ fn init_gl() void {
     c.glEnable(c.GL_LIGHT1);                                // Enable Light One
 
     c.glColor4f(1.0, 1.0, 1.0, 0.5);                        // Full Brightness, 50% Alpha
-    c.glBlendFunc(c.GL_SRC_ALPHA, c.GL_ONE);                // Blending Function For Translucency Based On Source Alpha Value   
+    c.glBlendFunc(c.GL_SRC_ALPHA, c.GL_ONE);                // Blending Function For Translucency Based On Source Alpha Value
 }
 
 fn init() bool {
     _ = c.glfwSetErrorCallback(errorCallback);
 
     if (c.glfwInit() == c.GL_FALSE) {
-        warn("Failed to initialize GLFW\n");
+        warn("Failed to initialize GLFW\n", .{});
         return false;
     }
 
     c.glfwWindowHint(c.GLFW_SAMPLES, 4);                // 4x antialiasing
 
-    window = c.glfwCreateWindow(width, height, c"Tutorial", null, null) orelse {
-        panic("unable to create window\n");
+    window = c.glfwCreateWindow(width, height, "Lesson08", null, null) orelse {
+        panic("unable to create window\n", .{});
     };
 
     _ = c.glfwSetKeyCallback(window, keyCallback);
@@ -191,7 +191,7 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glBindTexture(c.GL_TEXTURE_2D, texture[filter]);  // Select Our Texture
 
     c.glBegin(c.GL_QUADS);
-    // Front 
+    // Front
     c.glNormal3f(0.0, 0.0, 1.0);
     c.glTexCoord2f(0.0, 0.0); c.glVertex3f(-1.0, -1.0,  1.0);  // Bottom Left Of The Texture and Quad
     c.glTexCoord2f(1.0, 0.0); c.glVertex3f( 1.0, -1.0,  1.0);  // Bottom Right Of The Texture and Quad
@@ -228,7 +228,7 @@ fn draw() void {                                // Here's Where We Do All The Dr
     c.glTexCoord2f(1.0, 1.0); c.glVertex3f(-1.0,  1.0,  1.0);  // Top Right Of The Texture and Quad
     c.glTexCoord2f(0.0, 1.0); c.glVertex3f(-1.0,  1.0, -1.0);  // Top Left Of The Texture and Quad
     c.glEnd();
-    
+
     xrot += xspeed;
     yrot += yspeed;
 }

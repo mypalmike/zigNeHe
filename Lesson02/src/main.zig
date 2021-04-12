@@ -8,11 +8,11 @@ const height: i32 = 768;
 
 var window: *c.GLFWwindow = undefined;
 
-extern fn errorCallback(err: c_int, description: [*c]const u8) void {
-    panic("Error: {}\n", description);
+fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
+    panic("Error: {}\n", .{description});
 }
 
-extern fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) void {
+fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
     if (action != c.GLFW_PRESS) return;
 
     switch (key) {
@@ -30,7 +30,7 @@ fn perspectiveGL(fovY: f64, aspect: f64, zNear: f64, zFar: f64) void {
 fn init_gl() void {
     c.glMatrixMode(c.GL_PROJECTION);                    // Select The Projection Matrix
     c.glLoadIdentity();
-    var aspect_ratio: f32 = f32(height) / f32(width);
+    var aspect_ratio: f32 = @intToFloat(f32, height) / @intToFloat(f32, width);
     perspectiveGL(45.0, (1.0 / aspect_ratio), 0.1, 100.0);
     c.glMatrixMode(c.GL_MODELVIEW);
     c.glShadeModel(c.GL_SMOOTH);                        // Enables Smooth Shading
@@ -45,14 +45,14 @@ fn init() bool {
     _ = c.glfwSetErrorCallback(errorCallback);
 
     if (c.glfwInit() == c.GL_FALSE) {
-        warn("Failed to initialize GLFW\n");
+        warn("Failed to initialize GLFW\n", .{});
         return false;
     }
 
     c.glfwWindowHint(c.GLFW_SAMPLES, 4);                // 4x antialiasing
 
-    window = c.glfwCreateWindow(width, height, c"Tutorial", null, null) orelse {
-        panic("unable to create window\n");
+    window = c.glfwCreateWindow(width, height, "Lesson02", null, null) orelse {
+        panic("unable to create window\n", .{});
     };
 
     _ = c.glfwSetKeyCallback(window, keyCallback);

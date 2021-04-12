@@ -9,13 +9,15 @@ The build.zig files work on some versions of MacOS and FreeBSD. With a little ef
 
 ## Requirements
 
-Tested with Zig version 0.5.0.
+Tested with Zig version 0.7.1.
 
 You will need to install glfw (see https://www.glfw.org/). On MacOS:
 
 ```
 $ brew install glfw
 ```
+
+On MacOS, you will also need to install XCode in order to get the OpenGL framework.
 
 
 ## Building and running
@@ -26,6 +28,11 @@ In each LessonXX directory, you can build and run the given tutorial by running:
 $ zig build run
 ```
 
+On MacOS, you may run into linking problems with OpenGL. If this happens try:
+
+```
+$ ZIG_SYSTEM_LINKER_HACK=1 zig build run
+```
 
 ## Screenshot
 

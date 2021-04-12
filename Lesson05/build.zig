@@ -1,13 +1,13 @@
-const Builder = @import("std").build.Builder;
-const builtin = @import("builtin");
+const std = @import("std");
+const Builder = std.build.Builder;
 
 pub fn build(b: *Builder) void {
     const mode = b.standardReleaseOptions();
     const exe = b.addExecutable("Lesson05", "src/main.zig");
     exe.setBuildMode(mode);
 
-    switch (builtin.os) {
-        .macosx => {
+    switch (std.Target.current.os.tag) {
+        .macos => {
             exe.addFrameworkDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks");
             exe.linkFramework("OpenGL");
         },
