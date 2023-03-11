@@ -1,5 +1,5 @@
 pub usingnamespace @cImport({
-    @cInclude("glu.h");
+    @cInclude("GL/glu.h");
     @cInclude("GLFW/glfw3.h");
     @cDefine("STBI_ONLY_PNG", "");
     @cDefine("STBI_NO_STDIO", "");
