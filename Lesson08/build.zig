@@ -1,4 +1,5 @@
 const std = @import("std");
+const currentTarget = @import("builtin").target;
 const Builder = std.build.Builder;
 
 pub fn build(b: *Builder) void {
@@ -9,19 +10,19 @@ pub fn build(b: *Builder) void {
 
     exe.setBuildMode(mode);
 
-    switch (std.Target.current.os.tag) {
+    switch (currentTarget.os.tag) {
         .macos => {
             exe.addFrameworkDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks");
-            exe.addIncludeDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers");
+            exe.addIncludePath("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/OpenGL.framework/Headers");
             exe.linkFramework("OpenGL");
         },
         .freebsd => {
-            exe.addIncludeDir("/usr/local/include/GL");
+            exe.addIncludePath("/usr/local/include/GL");
             exe.linkSystemLibrary("gl");
             exe.linkSystemLibrary("glu");
         },
         .linux => {
-            exe.addLibPath("/usr/lib/x86_64-linux-gnu");
+            exe.addLibraryPath("/usr/lib/x86_64-linux-gnu");
             exe.linkSystemLibrary("c");
             exe.linkSystemLibrary("gl");
             exe.linkSystemLibrary("glu");
@@ -30,8 +31,8 @@ pub fn build(b: *Builder) void {
             @panic("don't know how to build on your system");
         },
     }
-    exe.addIncludeDir("stb_image-2.23");
-    exe.addIncludeDir("/usr/local/include");
+    exe.addIncludePath("stb_image-2.23");
+    exe.addIncludePath("/usr/local/include");
     exe.linkSystemLibrary("glfw");
 
     exe.install();

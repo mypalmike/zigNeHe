@@ -8,7 +8,7 @@ The build.zig files work on some versions of MacOS and FreeBSD, as well as Linux
 
 ## Requirements
 
-Tested with Zig version 0.7.1.
+Tested with Zig version 0.10.1.
 
 You will need to install [glfw](https://www.glfw.org/).
 

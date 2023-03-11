@@ -1,9 +1,9 @@
 const std = @import("std");
-const warn = std.debug.warn;
+const warn = std.log.warn;
 const panic = std.debug.panic;
 const c = @import("c.zig");
 const PngImage = @import("png.zig").PngImage;
-const crate_png = @embedFile("../data/Glass.png");
+const crate_png = @embedFile("data/Glass.png");
 
 const width: i32 = 1024;
 const height: i32 = 768;
@@ -27,10 +27,14 @@ const lightDiffuse = [_]c.GLfloat {1.0, 1.0, 1.0, 1.0};
 const lightPosition = [_]c.GLfloat {0.0, 0.0, 2.0, 1.0};
 
 fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
-    panic("Error: {}\n", .{description});
+    _ = err;
+    panic("Error: {s}\n", .{description});
 }
 
 fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
+    _ = scancode;
+    _ = mods;
+
     if (action == c.GLFW_PRESS) {
         switch (key) {
             c.GLFW_KEY_ESCAPE => c.glfwSetWindowShouldClose(win, c.GL_TRUE),
@@ -96,7 +100,7 @@ fn load_textures() !void {
         0,
         c.GL_RGBA,
         c.GL_UNSIGNED_BYTE,
-        @ptrCast(*c_void, &img.raw[0]),
+        @ptrCast(*anyopaque, &img.raw[0]),
     );
 
     c.glBindTexture(c.GL_TEXTURE_2D, texture[1]);
@@ -111,7 +115,7 @@ fn load_textures() !void {
         0,
         c.GL_RGBA,
         c.GL_UNSIGNED_BYTE,
-        @ptrCast(*c_void, &img.raw[0]),
+        @ptrCast(*anyopaque, &img.raw[0]),
     );
 
     c.glBindTexture(c.GL_TEXTURE_2D, texture[2]);
@@ -124,7 +128,7 @@ fn load_textures() !void {
         @intCast(c_int, img.height),
         c.GL_RGBA,
         c.GL_UNSIGNED_BYTE,
-        @ptrCast(*c_void, &img.raw[0]),
+        @ptrCast(*anyopaque, &img.raw[0]),
     );
 }
 

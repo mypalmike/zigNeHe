@@ -1,9 +1,9 @@
 const std = @import("std");
-const warn = std.debug.warn;
+const warn = std.log.warn;
 const panic = std.debug.panic;
 const c = @import("c.zig");
 const PngImage = @import("png.zig").PngImage;
-const nehe_png = @embedFile("../data/NeHe.png");
+const nehe_png = @embedFile("data/NeHe.png");
 
 const width: i32 = 1024;
 const height: i32 = 768;
@@ -17,10 +17,14 @@ var zrot: c.GLfloat = 0.0;
 var texture: c.GLuint = 0; //      texture[1];                 // Storage For One Texture
 
 fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
-    panic("Error: {}\n", .{description});
+    _ = err;
+    panic("Error: {s}\n", .{description});
 }
 
 fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
+    _ = scancode;
+    _ = mods;
+
     if (action != c.GLFW_PRESS) return;
 
     switch (key) {
@@ -55,7 +59,7 @@ fn load_texture() !void {
         0,
         c.GL_RGBA,
         c.GL_UNSIGNED_BYTE,
-        @ptrCast(*c_void, &img.raw[0]),
+        @ptrCast(*anyopaque, &img.raw[0]),
     );
 
 }
