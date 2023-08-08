@@ -34,7 +34,9 @@ fn perspectiveGL(fovY: f64, aspect: f64, zNear: f64, zFar: f64) void {
 fn init_gl() void {
     c.glMatrixMode(c.GL_PROJECTION);                    // Select The Projection Matrix
     c.glLoadIdentity();
-    var aspect_ratio: f32 = @intToFloat(f32, height) / @intToFloat(f32, width);
+    const fHeight: f32 = @floatFromInt(height);
+    const fWidth: f32 = @floatFromInt(width);
+    const aspect_ratio = fHeight / fWidth;
     perspectiveGL(45.0, (1.0 / aspect_ratio), 0.1, 100.0);
     c.glMatrixMode(c.GL_MODELVIEW);
     c.glShadeModel(c.GL_SMOOTH);                        // Enables Smooth Shading

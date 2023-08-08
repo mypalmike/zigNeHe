@@ -1,41 +1,48 @@
 const std = @import("std");
 const currentTarget = @import("builtin").target;
-const Builder = std.build.Builder;
 
-pub fn build(b: *Builder) void {
-    const mode = b.standardReleaseOptions();
-    const exe = b.addExecutable("Lesson06", "src/main.zig");
+pub fn build(b: *std.Build) void {
+    const target = b.standardTargetOptions(.{});
+    const optimize = b.standardOptimizeOption(.{});
 
-    exe.addCSourceFile("stb_image-2.23/stb_image_impl.c", &[_][]const u8{"-std=c99"});
+    const exe = b.addExecutable(.{
+        .name = "Lesson06",
+        .root_source_file = .{ .path = "src/main.zig" },
+        .target = target,
+        .optimize = optimize,
+    });
 
-    exe.setBuildMode(mode);
+    exe.addCSourceFile(.{
+        .file = .{ .path = "stb_image-2.23/stb_image_impl.c" },
+        .flags = &[_][]const u8{"-std=c99"},
+    });
 
     switch (currentTarget.os.tag) {
         .macos => {
-            exe.addFrameworkDir("/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks");
+            exe.addFrameworkPath(.{ .path = "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks" });
             exe.linkFramework("OpenGL");
         },
         .freebsd => {
-            exe.addIncludePath("/usr/local/include/GL");
+            exe.addIncludePath(.{ .path = "/usr/local/include/GL" });
             exe.linkSystemLibrary("gl");
             exe.linkSystemLibrary("glu");
         },
         .linux => {
-            exe.addLibraryPath("/usr/lib/x86_64-linux-gnu");
+            exe.addLibraryPath(.{ .path = "/usr/lib/x86_64-linux-gnu" });
             exe.linkSystemLibrary("c");
-            exe.linkSystemLibrary("gl");
+            exe.linkSystemLibrary("GL");
         },
         else => {
             @panic("don't know how to build on your system");
         },
     }
-    exe.addIncludePath("stb_image-2.23");
-    exe.addIncludePath("/usr/local/include");
+    exe.addIncludePath(.{ .path = "stb_image-2.23" });
+    exe.addIncludePath(.{ .path = "/usr/local/include" });
     exe.linkSystemLibrary("glfw");
 
-    exe.install();
+    b.installArtifact(exe);
 
-    const run_cmd = exe.run();
+    const run_cmd = b.addRunArtifact(exe);
     run_cmd.step.dependOn(b.getInstallStep());
 
     const run_step = b.step("run", "Run the app");
