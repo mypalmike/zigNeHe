@@ -20,7 +20,7 @@ pub fn build(b: *Builder) void {
         .linux => {
             exe.addLibraryPath("/usr/lib/x86_64-linux-gnu");
             exe.linkSystemLibrary("c");
-            exe.linkSystemLibrary("gl");
+            exe.linkSystemLibrary("GL");
         },
         else => {
             @panic("don't know how to build on your system");

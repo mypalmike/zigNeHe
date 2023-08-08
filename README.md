@@ -4,7 +4,7 @@ The ancient NeHe OpenGL tutorials, ported to the Zig language.
 
 Based largely on the C-based [glfw 2 NeHe tutorials by Joseph Redmon (pjreddie@)](https://github.com/pjreddie/NeHe-Tutorials-Using-GLFW) with updates for glfw 3. Other useful base material from [andrewrk/tetris](https://github.com/andrewrk/tetris).
 
-The build.zig files work on some versions of MacOS and FreeBSD, as well as Linux (tested on Debian 11 and Ubtuntu 22.04). With a little effort they should build on other OSes - contributions welcome. Some tweaking of build and c.zig files might be required to build on non-Linux machines.
+The build.zig files work on some versions of MacOS and FreeBSD, as well as Linux (tested on Debian 11-12 and Ubuntu 22.04). With a little effort they should build on other OSes - contributions welcome. Some tweaking of build and c.zig files might be required to build on non-Linux machines.
 
 ## Requirements
 
@@ -20,7 +20,7 @@ brew install glfw
 
 On MacOS, you will also need to install XCode in order to get the OpenGL framework.
 
-### Debian 11
+### Debian 11-12
 
 ```sh
 apt install libglfw3-dev libglu1-mesa-dev
