@@ -4,11 +4,11 @@ The ancient NeHe OpenGL tutorials, ported to the Zig language.
 
 Based largely on the C-based [glfw 2 NeHe tutorials by Joseph Redmon (pjreddie@)](https://github.com/pjreddie/NeHe-Tutorials-Using-GLFW) with updates for glfw 3. Other useful base material from [andrewrk/tetris](https://github.com/andrewrk/tetris).
 
-The build.zig files work on some versions of MacOS and FreeBSD, as well as Linux (tested on Debian 11-12 and Ubuntu 22.04). With a little effort they should build on other OSes - contributions welcome. Some tweaking of build and c.zig files might be required to build on non-Linux machines.
+Currently tested on Linux (Debian 12) with Zig version 0.15.2.
+
+Older versions were tested on MacOS and FreeBSD. Some tweaking may be needed to get the latest version running, or to build on other OSes - contributions welcome.
 
 ## Requirements
-
-Tested with Zig version 0.11.0.
 
 You will need to install [glfw](https://www.glfw.org/).
 

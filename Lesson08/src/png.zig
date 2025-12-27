@@ -1,4 +1,4 @@
-const c = @import("c.zig");
+const c = @import("c");
 
 // From https://github.com/andrewrk/tetris
 pub const PngImage = struct {

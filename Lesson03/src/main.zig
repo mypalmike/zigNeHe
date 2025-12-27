@@ -1,19 +1,19 @@
 const std = @import("std");
 const warn = std.log.warn;
 const panic = std.debug.panic;
-const c = @import("c.zig");
+const c = @import("c");
 
 const width: i32 = 1024;
 const height: i32 = 768;
 
 var window: *c.GLFWwindow = undefined;
 
-fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
+fn errorCallback(err: c_int, description: [*c]const u8) callconv(.c) void {
     _ = err;
     panic("Error: {s}\n", .{description});
 }
 
-fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
+fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.c) void {
     _ = scancode;
     _ = mods;
 

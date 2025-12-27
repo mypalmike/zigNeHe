@@ -1,7 +1,7 @@
 const std = @import("std");
 const warn = std.log.warn;
 const panic = std.debug.panic;
-const c = @import("c.zig");
+const c = @import("c");
 const PngImage = @import("png.zig").PngImage;
 const crate_png = @embedFile("data/Crate.png");
 
@@ -25,12 +25,12 @@ const lightAmbient = [_]c.GLfloat {0.5, 0.5, 0.5, 1.0};
 const lightDiffuse = [_]c.GLfloat {1.0, 1.0, 1.0, 1.0};
 const lightPosition = [_]c.GLfloat {0.0, 0.0, 2.0, 1.0};
 
-fn errorCallback(err: c_int, description: [*c]const u8) callconv(.C) void {
+fn errorCallback(err: c_int, description: [*c]const u8) callconv(.c) void {
     _ = err;
     panic("Error: {s}\n", .{description});
 }
 
-fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.C) void {
+fn keyCallback(win: ?*c.GLFWwindow, key: c_int, scancode: c_int, action: c_int, mods: c_int) callconv(.c) void {
     _ = scancode;
     _ = mods;
 
